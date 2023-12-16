@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
 import { getStorage, ref as storageRef, uploadBytes, getDownloadURL } from 'firebase/storage';
 import { getDatabase, ref as databaseRef, push, set } from 'firebase/database';
+// import {web} from 'react-webcam';
 
 const storage = getStorage(); // Initialize Firebase Storage
 const database = getDatabase(); // Initialize Firebase Realtime Database
 
 const FormComponent = () => {
+  const [Data, setData] = useState(false);
   const [formData, setFormData] = useState({
     name: '',
     aadharNo: '',
@@ -61,13 +63,16 @@ const FormComponent = () => {
       picture: null,
     });
   };
-  bg-blue-600
+
   return (
-   <div>
-     <form className=" mt-48  max-w-md mx-auto p-6 rounded-lg shadow-md">
+    <div className=''>
+      <h1>AUTHORIZE</h1>
+    <div className="bg-blue-500 min-h-screen flex items-center justify-center">
+      
+     <form className="bg-white max-w-md mx-auto p-6 rounded-lg shadow-md">
       <div className="mb-4 ">
         <label htmlFor="name" className="block text-gray-700 font-semibold mb-2">
-          Names
+          Name
         </label>
         <input
           type="text"
@@ -131,6 +136,8 @@ const FormComponent = () => {
         Submit
       </button>
     </form>
+    
+   </div>
    </div>
   );
 };
