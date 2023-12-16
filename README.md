@@ -46,10 +46,7 @@ To run this project locally:
 4. Start the server using `npm run dev`.
 5. Access the website at `http://localhost:5173`.
 
-## Contributors
 
-- John Doe ([GitHub](https://github.com/johndoe))
-- Jane Smith ([GitHub](https://github.com/janesmith))
 
 ## Contributing
 
