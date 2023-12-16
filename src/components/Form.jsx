@@ -1,17 +1,18 @@
 import React, { useState } from 'react';
 import { getStorage, ref as storageRef, uploadBytes, getDownloadURL } from 'firebase/storage';
 import { getDatabase, ref as databaseRef, push, set } from 'firebase/database';
-// import {web} from 'react-webcam';
 
 const storage = getStorage(); // Initialize Firebase Storage
 const database = getDatabase(); // Initialize Firebase Realtime Database
 
 const FormComponent = () => {
-  const [Data, setData] = useState(false);
   const [formData, setFormData] = useState({
     name: '',
-    aadharNo: '',
-    amount: '',
+    dob: '',
+    resadd: '',
+    contact: '',
+    occupation: '',
+    bankaddr: '',
     picture: null,
   });
 
@@ -33,10 +34,10 @@ const FormComponent = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const { name, aadharNo, amount, picture } = formData;
+    const { name, dob, resadd, contact, occupation, bankaddr, picture } = formData;
 
     // Upload image to Firebase Storage
-    const fileName = `${name}_${aadharNo}`;
+    const fileName = `${name}_${dob}`;
     const storageReference = storageRef(storage, `Aadhar/${fileName}`);
     await uploadBytes(storageReference, picture);
 
@@ -48,8 +49,11 @@ const FormComponent = () => {
     const newPostRef = push(databaseReference);
     const postData = {
       name,
-      aadharNo,
-      amount,
+      dob,
+      resadd,
+      contact,
+      occupation,
+      bankaddr,
       picture: imageURL,
     };
     await set(newPostRef, postData);
@@ -58,21 +62,24 @@ const FormComponent = () => {
 
     setFormData({
       name: '',
-      aadharNo: '',
-      amount: '',
+      dob: '',
+      resadd: '',
+      contact: '',
+      occupation: '',
+      bankaddr: '',
       picture: null,
     });
   };
 
+
   return (
-    <div className=''>
-      <h1>AUTHORIZE</h1>
-    <div className="bg-blue-500 min-h-screen flex items-center justify-center">
+    <div className=' bg-[#2D5281] h-full'>
       
-     <form className="bg-white max-w-md mx-auto p-6 rounded-lg shadow-md">
+      
+     <form className="bg-white mt-20 max-w-md mx-auto p-6 rounded-lg shadow-md">
       <div className="mb-4 ">
         <label htmlFor="name" className="block text-gray-700 font-semibold mb-2">
-          Name
+          Full Name
         </label>
         <input
           type="text"
@@ -87,13 +94,13 @@ const FormComponent = () => {
       </div>
       <div className="mb-4">
         <label htmlFor="aadharNo" className="block text-gray-700 font-semibold mb-2">
-          Enter Aadhar No
+          Enter your DOB
         </label>
         <input
           type="text"
           id="aadharNo"
           name="aadharNo"
-          value={formData.aadharNo}
+          value={formData.dob}
           onChange={handleChange}
           className="w-full px-4 py-2 rounded-md border-gray-300 focus:border-indigo-500 focus:outline-none"
           placeholder="Enter Aadhar No"
@@ -102,19 +109,66 @@ const FormComponent = () => {
       </div>
       <div className="mb-4">
         <label htmlFor="amount" className="block text-gray-700 font-semibold mb-2">
-          Enter the Amount
+          Residential Details
         </label>
         <input
           type="text"
           id="amount"
           name="amount"
-          value={formData.amount}
+          value={formData.resadd}
           onChange={handleChange}
           className="w-full px-4 py-2 rounded-md border-gray-300 focus:border-indigo-500 focus:outline-none"
           placeholder="Enter Amount"
           required
         />
       </div>
+
+      <div className="mb-4">
+        <label htmlFor="amount" className="block text-gray-700 font-semibold mb-2">
+          Contact details
+        </label>
+        <input
+          type="text"
+          id="amount"
+          name="amount"
+          value={formData.contact}
+          onChange={handleChange}
+          className="w-full px-4 py-2 rounded-md border-gray-300 focus:border-indigo-500 focus:outline-none"
+          placeholder="Enter Amount"
+          required
+        />
+      </div>
+      <div className="mb-4">
+        <label htmlFor="amount" className="block text-gray-700 font-semibold mb-2">
+          Occupation
+        </label>
+        <input
+          type="text"
+          id="amount"
+          name="amount"
+          value={formData.occupation}
+          onChange={handleChange}
+          className="w-full px-4 py-2 rounded-md border-gray-300 focus:border-indigo-500 focus:outline-none"
+          placeholder="Enter Amount"
+          required
+        />
+      </div>
+      <div className="mb-4">
+        <label htmlFor="amount" className="block text-gray-700 font-semibold mb-2">
+          Bank Account no
+        </label>
+        <input
+          type="text"
+          id="amount"
+          name="amount"
+          value={formData.bankaddr}
+          onChange={handleChange}
+          className="w-full px-4 py-2 rounded-md border-gray-300 focus:border-indigo-500 focus:outline-none"
+          placeholder="Enter Amount"
+          required
+        />
+      </div>
+
       <div className="mb-4">
         <label htmlFor="picture" className="block text-gray-700 font-semibold mb-2">
           Upload Your Pic
@@ -137,7 +191,6 @@ const FormComponent = () => {
       </button>
     </form>
     
-   </div>
    </div>
   );
 };
